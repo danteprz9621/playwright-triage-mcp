@@ -10,6 +10,7 @@ a single dataclass.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -17,10 +18,25 @@ from typing import Any
 
 FAILING_STATUSES = {"failed", "timedOut"}
 
+_ANSI_RE = re.compile(r"\x1b\[[0-9;]*m")
+
+
+def _strip_ansi(text: str) -> str:
+    """Playwright's JSON reporter embeds terminal color codes straight into
+    error messages; strip them so stored/displayed messages are plain text
+    (clustering already strips them again during normalization, but the
+    *raw* example_message shown to a human shouldn't carry escape codes)."""
+    return _ANSI_RE.sub("", text)
+
 
 @dataclass
 class TestFailure:
-    """A single failed test result, flattened out of the Playwright report tree."""
+    """A single failed test result, flattened out of a test report tree.
+
+    Shared by every parser in this package (Playwright's JSON reporter,
+    pytest-json-report, ...) so `clustering.py` doesn't need to know which
+    framework produced a given failure.
+    """
 
     test_title: str
     suite_path: str
@@ -31,6 +47,8 @@ class TestFailure:
     error_stack: str = ""
     duration_ms: int = 0
     retry: int = 0
+    source: str = "playwright"
+    tags: list[str] = field(default_factory=list)
 
 
 def parse_playwright_json_report(report_path: str | Path) -> list[TestFailure]:
@@ -106,16 +124,16 @@ def _extract_error(result: dict[str, Any]) -> dict[str, str]:
     error = result.get("error")
     if error:
         return {
-            "message": (error.get("message") or "").strip(),
-            "stack": (error.get("stack") or "").strip(),
+            "message": _strip_ansi((error.get("message") or "").strip()),
+            "stack": _strip_ansi((error.get("stack") or "").strip()),
         }
 
     errors = result.get("errors") or []
     if errors:
         first = errors[0] or {}
         return {
-            "message": (first.get("message") or "").strip(),
-            "stack": (first.get("stack") or "").strip(),
+            "message": _strip_ansi((first.get("message") or "").strip()),
+            "stack": _strip_ansi((first.get("stack") or "").strip()),
         }
 
     status = result.get("status", "unknown")

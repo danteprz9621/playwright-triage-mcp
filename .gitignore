@@ -5,3 +5,12 @@ __pycache__/
 *.egg-info/
 build/
 dist/
+
+# demo Playwright project (its own package, own lock/output lifecycle)
+demo/node_modules/
+demo/report.json
+demo/test-results/
+demo/playwright-report/
+
+# local triage runs
+triage-summary*.json

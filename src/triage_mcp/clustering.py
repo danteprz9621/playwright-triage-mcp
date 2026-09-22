@@ -36,6 +36,9 @@ def normalize_error(message: str) -> str:
     return text.strip()
 
 
+DEFAULT_PRIORITY_MARKERS = frozenset({"smoke"})
+
+
 @dataclass
 class FailureCluster:
     """One group of failures that share a normalized error signature."""
@@ -45,6 +48,8 @@ class FailureCluster:
     count: int
     affected_tests: list[str] = field(default_factory=list)
     affected_files: list[str] = field(default_factory=list)
+    is_priority: bool = False
+    priority_tests: list[str] = field(default_factory=list)
 
     def as_dict(self) -> dict:
         return {
@@ -53,15 +58,28 @@ class FailureCluster:
             "count": self.count,
             "affected_tests": self.affected_tests,
             "affected_files": self.affected_files,
+            "is_priority": self.is_priority,
+            "priority_tests": self.priority_tests,
         }
 
 
-def cluster_failures(failures: list[TestFailure]) -> list[FailureCluster]:
-    """Group failures by normalized error signature, largest cluster first.
+def cluster_failures(
+    failures: list[TestFailure],
+    priority_markers: set[str] | frozenset[str] | None = DEFAULT_PRIORITY_MARKERS,
+) -> list[FailureCluster]:
+    """Group failures by normalized error signature.
 
-    Clusters with more members are surfaced first because they're the
-    highest-leverage fix: one root cause likely explains all of them.
+    Sort order: clusters containing at least one failure tagged with a
+    `priority_markers` marker (e.g. a test marked `@pytest.mark.smoke`) come
+    first, regardless of size -- a single broken smoke test blocking a
+    release matters more than a 5-test cluster of a flaky, non-critical
+    check. Within each tier, larger clusters sort first, since one root
+    cause explaining more failures is the higher-leverage fix.
+
+    Pass `priority_markers=None` (or an empty set) to disable priority
+    tagging entirely and sort purely by cluster size.
     """
+    active_markers = priority_markers or frozenset()
     clusters: dict[str, FailureCluster] = {}
 
     for failure in failures:
@@ -82,4 +100,12 @@ def cluster_failures(failures: list[TestFailure]) -> list[FailureCluster]:
         if failure.file and failure.file not in cluster.affected_files:
             cluster.affected_files.append(failure.file)
 
-    return sorted(clusters.values(), key=lambda c: c.count, reverse=True)
+        if active_markers and (set(failure.tags) & active_markers):
+            cluster.is_priority = True
+            if test_label not in cluster.priority_tests:
+                cluster.priority_tests.append(test_label)
+
+    return sorted(
+        clusters.values(),
+        key=lambda c: (not c.is_priority, -c.count),
+    )

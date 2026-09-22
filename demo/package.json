@@ -1,0 +1,12 @@
+{
+  "name": "playwright-triage-demo",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Tiny Playwright suite used only to produce a real JSON report for the triage MCP's CI demo. A few tests fail on purpose to prove clustering works against a real run, not just the fixtures.",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0"
+  }
+}

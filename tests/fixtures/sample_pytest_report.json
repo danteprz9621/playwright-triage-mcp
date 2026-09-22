@@ -1,0 +1,87 @@
+{
+  "created": 1758540000.0,
+  "duration": 2.4,
+  "exitcode": 1,
+  "root": "/repo",
+  "summary": {
+    "total": 6,
+    "passed": 1,
+    "failed": 5
+  },
+  "tests": [
+    {
+      "nodeid": "tests/test_api.py::test_status_a",
+      "lineno": 5,
+      "outcome": "failed",
+      "keywords": ["test_status_a", "tests/test_api.py"],
+      "setup": {"duration": 0.001, "outcome": "passed"},
+      "call": {
+        "duration": 0.004,
+        "outcome": "failed",
+        "longrepr": "def test_status_a():\n        response = fake_call(500)\n>       assert response == 200\nE       assert 500 == 200\n\ntests/test_api.py:8: AssertionError"
+      },
+      "teardown": {"duration": 0.001, "outcome": "passed"}
+    },
+    {
+      "nodeid": "tests/test_api.py::test_status_b",
+      "lineno": 14,
+      "outcome": "failed",
+      "keywords": ["test_status_b", "tests/test_api.py"],
+      "setup": {"duration": 0.001, "outcome": "passed"},
+      "call": {
+        "duration": 0.003,
+        "outcome": "failed",
+        "longrepr": "def test_status_b():\n        response = fake_call(501)\n>       assert response == 200\nE       assert 501 == 200\n\ntests/test_api.py:17: AssertionError"
+      },
+      "teardown": {"duration": 0.001, "outcome": "passed"}
+    },
+    {
+      "nodeid": "tests/test_api.py::test_status_c",
+      "lineno": 23,
+      "outcome": "failed",
+      "keywords": ["test_status_c", "tests/test_api.py"],
+      "setup": {"duration": 0.001, "outcome": "passed"},
+      "call": {
+        "duration": 0.005,
+        "outcome": "failed",
+        "longrepr": "def test_status_c():\n        response = fake_call(502)\n>       assert response == 200\nE       assert 502 == 200\n\ntests/test_api.py:26: AssertionError"
+      },
+      "teardown": {"duration": 0.001, "outcome": "passed"}
+    },
+    {
+      "nodeid": "tests/test_smoke.py::test_health_check",
+      "lineno": 9,
+      "outcome": "failed",
+      "keywords": ["test_health_check", "smoke", "tests/test_smoke.py"],
+      "setup": {"duration": 0.001, "outcome": "passed"},
+      "call": {
+        "duration": 0.512,
+        "outcome": "failed",
+        "longrepr": "def test_health_check():\n        response = ping_health_endpoint()\n>       assert response.ok\nE       AssertionError: health check endpoint returned a non-2xx status\n\ntests/test_smoke.py:12: AssertionError"
+      },
+      "teardown": {"duration": 0.001, "outcome": "passed"}
+    },
+    {
+      "nodeid": "tests/test_reports.py::test_export_contains_summary",
+      "lineno": 31,
+      "outcome": "failed",
+      "keywords": ["test_export_contains_summary", "tests/test_reports.py"],
+      "setup": {"duration": 0.001, "outcome": "passed"},
+      "call": {
+        "duration": 0.02,
+        "outcome": "failed",
+        "longrepr": "def test_export_contains_summary():\n>       assert \"summary\" in export\nE       AssertionError: assert 'summary' in export"
+      },
+      "teardown": {"duration": 0.001, "outcome": "passed"}
+    },
+    {
+      "nodeid": "tests/test_reports.py::test_export_contains_title",
+      "lineno": 40,
+      "outcome": "passed",
+      "keywords": ["test_export_contains_title", "tests/test_reports.py"],
+      "setup": {"duration": 0.001, "outcome": "passed"},
+      "call": {"duration": 0.01, "outcome": "passed"},
+      "teardown": {"duration": 0.001, "outcome": "passed"}
+    }
+  ]
+}
