@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "playwright-triage-mcp"
+version = "0.1.0"
+description = "MCP server that clusters Playwright test failures by normalized error signature for faster triage."
+requires-python = ">=3.10"
+dependencies = [
+    "mcp>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0"]
+
+[project.scripts]
+playwright-triage-mcp = "triage_mcp.server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

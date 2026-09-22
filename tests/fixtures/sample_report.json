@@ -1,0 +1,179 @@
+{
+  "config": {},
+  "suites": [
+    {
+      "title": "checkout.spec.ts",
+      "file": "checkout.spec.ts",
+      "specs": [
+        {
+          "title": "shows order confirmation after payment",
+          "file": "checkout.spec.ts",
+          "tests": [
+            {
+              "projectName": "chromium",
+              "results": [
+                {
+                  "status": "failed",
+                  "duration": 5123,
+                  "retry": 0,
+                  "error": {
+                    "message": "TimeoutError: locator.click: Timeout 5000ms exceeded waiting for locator('button#submit-4821')",
+                    "stack": "at checkout.spec.ts:42:11"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "applies discount code before payment",
+          "file": "checkout.spec.ts",
+          "tests": [
+            {
+              "projectName": "chromium",
+              "results": [
+                {
+                  "status": "failed",
+                  "duration": 5089,
+                  "retry": 0,
+                  "error": {
+                    "message": "TimeoutError: locator.click: Timeout 5000ms exceeded waiting for locator('button#submit-1190')",
+                    "stack": "at checkout.spec.ts:77:11"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "suites": [
+        {
+          "title": "guest checkout",
+          "file": "checkout.spec.ts",
+          "specs": [
+            {
+              "title": "allows checkout without an account",
+              "file": "checkout.spec.ts",
+              "tests": [
+                {
+                  "projectName": "webkit",
+                  "results": [
+                    {
+                      "status": "failed",
+                      "duration": 4998,
+                      "retry": 1,
+                      "error": {
+                        "message": "TimeoutError: locator.click: Timeout 5000ms exceeded waiting for locator('button#submit-6602')",
+                        "stack": "at checkout.spec.ts:110:11"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "suites": []
+        }
+      ]
+    },
+    {
+      "title": "notifications-api.spec.ts",
+      "file": "notifications-api.spec.ts",
+      "specs": [
+        {
+          "title": "returns 200 for a valid push payload",
+          "file": "notifications-api.spec.ts",
+          "tests": [
+            {
+              "projectName": "api",
+              "results": [
+                {
+                  "status": "failed",
+                  "duration": 312,
+                  "retry": 0,
+                  "error": {
+                    "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 200\nReceived: 500",
+                    "stack": "at notifications-api.spec.ts:18:23"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "returns 200 for a valid in-app payload",
+          "file": "notifications-api.spec.ts",
+          "tests": [
+            {
+              "projectName": "api",
+              "results": [
+                {
+                  "status": "failed",
+                  "duration": 298,
+                  "retry": 0,
+                  "error": {
+                    "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 200\nReceived: 503",
+                    "stack": "at notifications-api.spec.ts:34:23"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "suites": []
+    },
+    {
+      "title": "onboarding.spec.ts",
+      "file": "onboarding.spec.ts",
+      "specs": [
+        {
+          "title": "redirects to dashboard after signup",
+          "file": "onboarding.spec.ts",
+          "tests": [
+            {
+              "projectName": "chromium",
+              "results": [
+                {
+                  "status": "timedOut",
+                  "duration": 30000,
+                  "retry": 0,
+                  "error": {
+                    "message": "Test timeout of 30000ms exceeded while waiting for navigation to \"/dashboard\"",
+                    "stack": "at onboarding.spec.ts:15:5"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "logs the user in successfully",
+          "file": "onboarding.spec.ts",
+          "tests": [
+            {
+              "projectName": "chromium",
+              "results": [
+                {
+                  "status": "passed",
+                  "duration": 812,
+                  "retry": 0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "suites": []
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-22T10:00:00.000Z",
+    "duration": 51600,
+    "expected": 1,
+    "unexpected": 6,
+    "flaky": 0,
+    "skipped": 0
+  }
+}
